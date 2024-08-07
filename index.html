@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="video-container">
+    <video id="video2" autoplay loop muted playsinline>
+        <source class ="video-1" src="Videos/video1.mp4" type ="video/mp4">
+    </video>
+
+    <video id="video-2" autoplay loop muted playsinline>
+        <source class="video-2" src="Videos/video2.mp4" type="video/mp4">
+    </video>
+
+    <button onclick="nextVideo()" class="next-button">Next</button>
+    <button onclick="prevVideo()" class="back-button">Back</button>
+</div>
+
+<script>
+    // Variable para rastrear el índice del video actualmente visible
+    let currentVideoIndex = 0;
+    // Selecciona todos los elementos de video en la página
+    const videos = document.querySelectorAll('video');
+    
+    function showVideo(index) {
+            // Itera sobre cada video
+        videos.forEach((video, i) => {
+              // Agrega o elimina la clase 'active' según el índice del video
+            video.classList.toggle('active', i === index);
+        });
+        // Actualiza el índice del video actual
+        currentVideoIndex = index;
+        localStorage.setItem('currentVideoIndex', index);
+    }
+
+    function nextVideo() {
+        const nextIndex = (currentVideoIndex + 1) % videos.length;
+        showVideo(nextIndex);
+    }
+
+    function prevVideo() {
+        const prevIndex = (currentVideoIndex - 1 + videos.length) % videos.length;
+        showVideo(prevIndex);
+    }
+    // Recuperar el índice del video almacenado al cargar la página
+    const storedIndex = localStorage.getItem('currentVideoIndex');
+    if (storedIndex !== null) {
+        currentVideoIndex = parseInt(storedIndex);
+        showVideo(currentVideoIndex);
+}
+
+</script>
+
+</body>
+</html>
